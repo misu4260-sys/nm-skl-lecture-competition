@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>内蒙古自治区社科联科普讲解大赛后台</title>
+  <style>
+    :root {
+      --bg: #f5f4f1;
+      --panel: #ffffff;
+      --panel-soft: #faf8f5;
+      --line: #ebe5de;
+      --line-strong: #ddd3c8;
+      --text: #2b211d;
+      --muted: #7a6e66;
+      --primary: #b42318;
+      --primary-soft: rgba(180, 35, 24, 0.08);
+      --success: #0f766e;
+      --warm: #9a3412;
+      --gold: #c9a46a;
+      --sidebar: #faf8f4;
+      --shadow: 0 22px 48px rgba(71, 45, 29, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(180, 35, 24, 0.06), transparent 22%),
+        radial-gradient(circle at top right, rgba(201, 164, 106, 0.12), transparent 20%),
+        linear-gradient(180deg, #faf8f4 0%, #f4f1ec 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(250, 248, 244, 0.98)),
+        var(--sidebar);
+      padding: 18px 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 8px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, #8f1d14, #c13a21);
+      box-shadow: 0 12px 24px rgba(180, 35, 24, 0.2);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .menu-title {
+      margin: 22px 8px 10px;
+      font-size: 12px;
+      color: #a08f80;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #5f5148;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .menu-item.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .menu-badge {
+      margin-left: auto;
+      min-width: 24px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-align: center;
+      color: var(--primary);
+      background: rgba(180, 35, 24, 0.1);
+    }
+
+    .content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 252, 248, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-title strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .topbar-title span {
+      display: block;
+      margin-top: 3px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #d97706, #b42318);
+    }
+
+    .page {
+      padding: 22px 24px 28px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #796b61;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-color: rgba(180, 35, 24, 0.18);
+      background: #fff7f4;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      color: #ab9b8f;
+      font-size: 13px;
+    }
+
+    .breadcrumb strong {
+      color: #6b5a4f;
+      font-weight: 600;
+    }
+
+    .workspace {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      min-height: 760px;
+    }
+
+    .main-view {
+      padding: 34px 34px 28px;
+      background:
+        linear-gradient(180deg, #ffffff 0%, #fcfbf9 100%);
+    }
+
+    .detail-head {
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .detail-head h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      line-height: 1.3;
+      font-family: "STSong", "Songti SC", "Noto Serif SC", serif;
+      color: #2a1f19;
+      text-wrap: balance;
+    }
+
+    .detail-meta {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta-chip {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fcfaf7;
+      border: 1px solid var(--line);
+    }
+
+    .media-frame {
+      max-width: 920px;
+      margin: 28px auto 0;
+    }
+
+    .video-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #120b09;
+      aspect-ratio: 16 / 9;
+      box-shadow: 0 26px 40px rgba(127, 29, 29, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .video-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #120b09;
+    }
+
+    .video-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 26%;
+      background:
+        linear-gradient(180deg, transparent, rgba(63, 12, 10, 0.9)),
+        radial-gradient(circle at 20% 100%, rgba(255, 169, 64, 0.26), transparent 26%);
+      clip-path: polygon(0 100%, 0 68%, 10% 80%, 18% 64%, 27% 75%, 39% 58%, 52% 77%, 64% 61%, 77% 73%, 89% 56%, 100% 74%, 100% 100%);
+      pointer-events: none;
+    }
+
+    .video-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 1;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #fff7ed;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: rgba(17, 24, 39, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .video-fallback {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .download-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .download-btn {
+      padding: 11px 22px;
+      border-radius: 12px;
+      border: 1px solid rgba(180, 35, 24, 0.16);
+      background: #fffdfb;
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 10px 20px rgba(180, 35, 24, 0.08);
+    }
+
+    .extra-panel {
+      max-width: 920px;
+      margin: 28px auto 0;
+      padding: 22px 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--panel-soft);
+    }
+
+    .extra-panel h3 {
+      margin: 0 0 14px;
+      font-size: 18px;
+    }
+
+    .summary {
+      color: #4b5563;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .section-note {
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .summary-item {
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fffefc 0%, #fffaf6 100%);
+      border: 1px solid var(--line);
+    }
+
+    .summary-item strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .summary-item span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .side-panel {
+      border-left: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, #fcfbf8 0%, #f8f5f0 100%);
+      padding: 28px 24px;
+    }
+
+    .side-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .side-card-head {
+      padding: 22px 22px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .side-card-head h2 {
+      margin: 0;
+      font-size: 24px;
+      font-family: "STSong", "Songti SC", "Noto Serif SC", serif;
+    }
+
+    .side-card-head p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-list {
+      padding: 6px 22px 18px;
+    }
+
+    .info-item {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+
+    .info-item:last-child {
+      border-bottom: 0;
+    }
+
+    .info-label {
+      color: #7c6d63;
+      font-size: 14px;
+    }
+
+    .info-value {
+      color: #0f172a;
+      font-size: 14px;
+      line-height: 1.75;
+      word-break: break-word;
+    }
+
+    .info-link {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .status-card {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(201, 164, 106, 0.14), rgba(180, 35, 24, 0.06));
+      border: 1px solid rgba(201, 164, 106, 0.2);
+    }
+
+    .status-card strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .status-card p {
+      margin-top: 8px;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .audit-card {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .audit-card strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .audit-card p {
+      margin-top: 8px;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .todo-card {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(180, 35, 24, 0.14);
+      background: linear-gradient(180deg, #fff9f7, #fffdfb);
+      box-shadow: 0 16px 30px rgba(180, 35, 24, 0.08);
+    }
+
+    .todo-card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .todo-card-head strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .todo-card-head span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .todo-badge {
+      min-width: 74px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(180, 35, 24, 0.1);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .todo-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .todo-item {
+      padding: 14px 14px 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      position: relative;
+    }
+
+    .todo-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      bottom: 14px;
+      width: 4px;
+      border-radius: 999px;
+      background: #c13a21;
+    }
+
+    .todo-item strong {
+      display: block;
+      padding-right: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1f2937;
+    }
+
+    .todo-item p {
+      margin: 8px 0 0;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .todo-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .todo-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(180, 35, 24, 0.08);
+      color: #8f1d14;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .todo-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .todo-btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #8f1d14, #c13a21);
+      box-shadow: 0 10px 22px rgba(180, 35, 24, 0.18);
+    }
+
+    .todo-btn.secondary {
+      color: #8f1d14;
+      background: rgba(180, 35, 24, 0.08);
+      box-shadow: none;
+    }
+
+    .todo-note {
+      color: #7a6e66;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1100px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .page,
+      .topbar,
+      .main-view,
+      .side-panel {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .detail-head h1 {
+        font-size: 1.7rem;
+      }
+
+      .info-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">社</div>
+        <div class="brand-copy">
+          <strong>内蒙古自治区社科联</strong>
+          <span>科普讲解大赛后台</span>
+        </div>
+      </div>
+
+      <div class="menu-title">导航</div>
+      <nav class="menu">
+        <a class="menu-item" href="#">
+          <span>赛事管理</span>
+        </a>
+        <a class="menu-item" href="#">
+          <span>讲解作品</span>
+          <span class="menu-badge">128</span>
+        </a>
+        <a class="menu-item active" href="#">
+          <span>查看详情</span>
+        </a>
+        <a class="menu-item" href="#">
+          <span>评审结果</span>
+        </a>
+        <a class="menu-item" href="#">
+          <span>资料下载</span>
+        </a>
+      </nav>
+
+      <div class="menu-title">当前专题</div>
+      <nav class="menu">
+        <a class="menu-item active" href="#">
+          <span>科普讲解大赛作品库</span>
+        </a>
+        <a class="menu-item" href="#">
+          <span>获奖名单汇总</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="topbar">
+        <div class="topbar-title">
+          <strong>内蒙古自治区社科联科普讲解大赛后台管理</strong>
+          <span>作品查看页原型 · 结合赛事截图整理</span>
+        </div>
+        <div class="topbar-right">
+          <span>user5</span>
+          <div class="avatar">U</div>
+          <a href="#">退出</a>
+        </div>
+      </header>
+
+      <div class="page">
+        <div class="breadcrumb">
+          <span>参赛管理</span>
+          <span>/</span>
+          <span>作品列表</span>
+          <span>/</span>
+          <strong>查看详情</strong>
+        </div>
+
+        <div class="tabs">
+          <span class="tab">讲解作品</span>
+          <span class="tab">审核流程</span>
+          <span class="tab active">查看</span>
+        </div>
+
+        <section class="workspace">
+          <div class="workspace-grid">
+            <div class="main-view">
+              <div class="detail-head">
+                <h1>第三届内蒙古自治区社会科学普及基地讲解员大赛作品详情</h1>
+                <div class="detail-meta">
+                  <span class="meta-chip">赛事时间：2025-08-11</span>
+                  <span class="meta-chip">作品类型：视频类</span>
+                  <span class="meta-chip">状态：已归档</span>
+                </div>
+              </div>
+
+              <div class="media-frame">
+                <div class="video-card">
+                  <div class="video-badge">科普讲解视频</div>
+                  <iframe
+                    class="video-frame"
+                    src="https://player.bilibili.com/player.html?isOutside=true&bvid=BV15vQwBZE7R&p=1&high_quality=1&danmaku=0&autoplay=0"
+                    title="第三届内蒙古自治区社会科学普及基地讲解员大赛视频"
+                    scrolling="no"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
+                    allowfullscreen="true">
+                  </iframe>
+                </div>
+                <div class="video-fallback">现在已经改成站外播放器模式；如果你点播放后仍然跳出站外，那通常是 B 站播放器策略导致，我们就再换成更稳的嵌入方案。</div>
+
+                <div class="download-row">
+                  <a class="download-btn" href="https://www.bilibili.com/video/BV15vQwBZE7R/?spm_id_from=333.337.search-card.all.click" target="_blank" rel="noreferrer">打开 B 站视频</a>
+                </div>
+              </div>
+
+              <div class="extra-panel">
+                <h3>作品简介</h3>
+                <div class="section-note">以下内容依据你提供的两届赛事截图整理，属于当前原型里的真实语境版文案。</div>
+                <p class="summary">
+                  第三届内蒙古自治区社会科学普及基地讲解员大赛于 2025 年 8 月 11 日在呼和浩特圆满落幕。根据截图内容，本届大赛由内蒙古自治区社会科学界联合会主办、内蒙古自治区图书馆协办，主题为“担负起新时代的文化使命”。各盟市社科联、社科普及基地选送的 55 名参赛选手展开激烈角逐，最终 20 位选手分获一、二、三等奖。页面主体适合集中展示讲解视频、赛事图片、获奖名单与附件材料，用于后台查看、归档与汇总。
+                </p>
+
+                <div class="summary-grid">
+                  <div class="summary-item">
+                    <strong>第三届赛事</strong>
+                    <span>主题为“担负起新时代的文化使命”，55 名选手参赛</span>
+                  </div>
+                  <div class="summary-item">
+                    <strong>第二届赛事</strong>
+                    <span>2024 年 9 月 13 日在呼和浩特举行，46 名选手参赛</span>
+                  </div>
+                  <div class="summary-item">
+                    <strong>后台查看重点</strong>
+                    <span>视频、获奖名单、赛事报道、单位信息和附件材料统一归档</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="side-panel">
+              <div class="side-card">
+                <div class="side-card-head">
+                  <h2>作品信息</h2>
+                  <p>根据你提供的截图内容整理的赛事字段</p>
+                </div>
+
+                <div class="info-list">
+                  <div class="info-item">
+                    <div class="info-label">赛事名称</div>
+                    <div class="info-value">第三届内蒙古自治区社会科学普及基地讲解员大赛</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">举办时间</div>
+                    <div class="info-value">2025 年 8 月 11 日</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">举办地点</div>
+                    <div class="info-value">呼和浩特市</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">主办单位</div>
+                    <div class="info-value">内蒙古自治区社会科学界联合会</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">协办单位</div>
+                    <div class="info-value">内蒙古自治区图书馆</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">赛事主题</div>
+                    <div class="info-value">担负起新时代的文化使命</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">参赛规模</div>
+                    <div class="info-value">各盟市社科联、社科普及基地选送的 55 名参赛选手</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">获奖结果</div>
+                    <div class="info-value">最终 20 位选手分获一、二、三等奖</div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">作品视频</div>
+                    <div class="info-value"><a class="info-link" href="#">查看</a></div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">获奖名单</div>
+                    <div class="info-value"><a class="info-link" href="#">查看</a></div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">赛事报道</div>
+                    <div class="info-value"><a class="info-link" href="#">查看</a></div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">第二届回顾</div>
+                    <div class="info-value"><a class="info-link" href="#">查看</a></div>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-label">附件下载</div>
+                    <div class="info-value"><a class="info-link" href="#">查看</a></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="status-card">
+                <strong>当前状态</strong>
+                <p>这版已经根据你发来的截图，把赛事名称、时间、主办协办单位、参赛人数和获奖结果收成了更贴近真实内容的版本。</p>
+              </div>
+
+              <div class="audit-card">
+                <strong>评审备注</strong>
+                <p>下一版最适合补的是“获奖名单表格预览”“现场照片缩略图”“第二届与第三届切换”和“报道正文滚动区”，这样会更自然地承接你截图里的内容结构。</p>
+              </div>
+
+              <div class="todo-card">
+                <div class="todo-card-head">
+                  <div>
+                    <strong>今日待办与提醒</strong>
+                    <span>已为 2026-04-10 记下两条待办，并统一设为今晚 20:30 提醒。</span>
+                  </div>
+                  <div class="todo-badge" id="todoDateBadge">2026-04-10</div>
+                </div>
+
+                <div id="todoList" class="todo-list"></div>
+
+                <div class="todo-actions">
+                  <button id="enableReminder" class="todo-btn" type="button">开启浏览器提醒</button>
+                  <button id="exportTodayTodos" class="todo-btn secondary" type="button">导出今日待办</button>
+                  <span id="todoStatus" class="todo-note">页面保持打开时，20:30 会尝试发送通知；如果通知未授权，会回退到弹窗提醒。</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    const TODO_STORAGE_KEY = "anmeng-today-todos-v1";
+    const TODAY_KEY = "2026-04-10";
+    const REMINDER_TIME = "20:30";
+
+    const todoDateBadge = document.getElementById("todoDateBadge");
+    const todoList = document.getElementById("todoList");
+    const todoStatus = document.getElementById("todoStatus");
+    const enableReminder = document.getElementById("enableReminder");
+    const exportTodayTodos = document.getElementById("exportTodayTodos");
+
+    const defaultTodos = [
+      {
+        id: "todo-ahhl-tech-assist",
+        title: "明确安徽联的科技助残项目与负责部门",
+        detail: "梳理安徽联科技助残具体有哪些项目、对应负责部门在哪里；同时比对其他省份有没有类似项目，重点关注康复部门和计财部门。",
+        reminderAt: `${TODAY_KEY}T20:30:00+08:00`
+      },
+      {
+        id: "todo-html-video-path",
+        title: "梳理 HTML 插视频的实现路径",
+        detail: "把 HTML 里插入视频的实现路径整理清楚，明确用什么标签、资源地址、兼容方式和页面接入方案。",
+        reminderAt: `${TODAY_KEY}T20:30:00+08:00`
+      }
+    ];
+
+    initializeTodos();
+    renderTodos();
+    scheduleReminderChecks();
+
+    enableReminder.addEventListener("click", async () => {
+      if (!("Notification" in window)) {
+        todoStatus.textContent = "当前浏览器不支持通知提醒，页面到点时会尝试用弹窗提示。";
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        todoStatus.textContent = "浏览器通知已开启。只要页面保持打开，今晚 20:30 会提醒你。";
+      } else {
+        todoStatus.textContent = "通知权限没有开启。页面到点时仍会尝试用弹窗提醒你。";
+      }
+    });
+
+    exportTodayTodos.addEventListener("click", () => {
+      const state = loadTodoState();
+      const payload = {
+        date: TODAY_KEY,
+        exportedAt: new Date().toISOString(),
+        todos: state.days[TODAY_KEY] || []
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `today-todos-${TODAY_KEY}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      todoStatus.textContent = `已导出今日待办：today-todos-${TODAY_KEY}.json`;
+    });
+
+    function initializeTodos() {
+      const state = loadTodoState();
+      if (!state.days[TODAY_KEY] || !state.days[TODAY_KEY].length) {
+        state.days[TODAY_KEY] = defaultTodos.map((item) => ({ ...item }));
+        persistTodoState(state);
+      }
+    }
+
+    function loadTodoState() {
+      try {
+        const raw = localStorage.getItem(TODO_STORAGE_KEY);
+        if (!raw) {
+          return { days: {}, reminded: {} };
+        }
+        const parsed = JSON.parse(raw);
+        return {
+          days: parsed.days && typeof parsed.days === "object" ? parsed.days : {},
+          reminded: parsed.reminded && typeof parsed.reminded === "object" ? parsed.reminded : {}
+        };
+      } catch (error) {
+        return { days: {}, reminded: {} };
+      }
+    }
+
+    function persistTodoState(state) {
+      localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function renderTodos() {
+      const state = loadTodoState();
+      const todos = state.days[TODAY_KEY] || [];
+      todoDateBadge.textContent = TODAY_KEY;
+
+      todoList.innerHTML = todos.map((todo) => `
+        <article class="todo-item">
+          <strong>${escapeHtml(todo.title)}</strong>
+          <p>${escapeHtml(todo.detail)}</p>
+          <div class="todo-meta">
+            <span class="todo-chip">今日事项</span>
+            <span class="todo-chip">提醒 ${formatReminder(todo.reminderAt)}</span>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function scheduleReminderChecks() {
+      checkReminders();
+      window.setInterval(checkReminders, 30000);
+    }
+
+    function checkReminders() {
+      const state = loadTodoState();
+      const todos = state.days[TODAY_KEY] || [];
+      const now = new Date();
+
+      todos.forEach((todo) => {
+        const reminderKey = `${TODAY_KEY}:${todo.id}`;
+        const target = new Date(todo.reminderAt);
+        if (state.reminded[reminderKey] || now < target) {
+          return;
+        }
+
+        const message = `今晚待办提醒：${todo.title}`;
+        if ("Notification" in window && Notification.permission === "granted") {
+          new Notification("今晚 20:30 提醒", { body: message });
+        } else {
+          window.alert(message);
+        }
+
+        state.reminded[reminderKey] = new Date().toISOString();
+        persistTodoState(state);
+        todoStatus.textContent = "20:30 提醒已触发。";
+      });
+    }
+
+    function formatReminder(value) {
+      const date = new Date(value);
+      return new Intl.DateTimeFormat("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(date);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+  </script>
+</body>
+</html>
