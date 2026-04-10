@@ -1,0 +1,1 @@
+# nm-skl-lecture-competition
