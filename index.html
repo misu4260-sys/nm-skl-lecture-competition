@@ -307,6 +307,7 @@
       height: 100%;
       border: 0;
       background: #120b09;
+      z-index: 1;
     }
 
     .video-card::after {
@@ -345,6 +346,74 @@
       color: var(--muted);
       font-size: 13px;
       text-align: center;
+    }
+
+    .video-poster {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      color: #fff7ec;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255, 227, 174, 0.28), transparent 18%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(26, 10, 7, 0.3));
+    }
+
+    .video-poster.hidden {
+      display: none;
+    }
+
+    .poster-copy small {
+      display: block;
+      font-size: 14px;
+      letter-spacing: 0.24em;
+      color: rgba(255, 235, 201, 0.86);
+    }
+
+    .poster-copy strong {
+      display: block;
+      margin-top: 12px;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      font-family: "STSong", "Songti SC", "Noto Serif SC", serif;
+      letter-spacing: 0.04em;
+      text-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    }
+
+    .poster-copy span {
+      display: block;
+      max-width: 540px;
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255, 242, 223, 0.84);
+    }
+
+    .play-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding: 12px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      background: rgba(255, 249, 240, 0.12);
+      color: #fffaf2;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(57, 18, 12, 0.22);
+      backdrop-filter: blur(10px);
+    }
+
+    .play-trigger::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 12px solid #fffaf2;
     }
 
     .download-row {
@@ -522,137 +591,6 @@
       line-height: 1.7;
     }
 
-    .todo-card {
-      margin-top: 18px;
-      padding: 18px 20px;
-      border-radius: 20px;
-      border: 1px solid rgba(180, 35, 24, 0.14);
-      background: linear-gradient(180deg, #fff9f7, #fffdfb);
-      box-shadow: 0 16px 30px rgba(180, 35, 24, 0.08);
-    }
-
-    .todo-card-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .todo-card-head strong {
-      display: block;
-      font-size: 16px;
-    }
-
-    .todo-card-head span {
-      display: block;
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .todo-badge {
-      min-width: 74px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(180, 35, 24, 0.1);
-      color: var(--primary);
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .todo-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .todo-item {
-      padding: 14px 14px 14px 16px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: #fff;
-      position: relative;
-    }
-
-    .todo-item::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 14px;
-      bottom: 14px;
-      width: 4px;
-      border-radius: 999px;
-      background: #c13a21;
-    }
-
-    .todo-item strong {
-      display: block;
-      padding-right: 8px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #1f2937;
-    }
-
-    .todo-item p {
-      margin: 8px 0 0;
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .todo-meta {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .todo-chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(180, 35, 24, 0.08);
-      color: #8f1d14;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .todo-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-      align-items: center;
-    }
-
-    .todo-btn {
-      border: 0;
-      border-radius: 12px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font: inherit;
-      font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, #8f1d14, #c13a21);
-      box-shadow: 0 10px 22px rgba(180, 35, 24, 0.18);
-    }
-
-    .todo-btn.secondary {
-      color: #8f1d14;
-      background: rgba(180, 35, 24, 0.08);
-      box-shadow: none;
-    }
-
-    .todo-note {
-      color: #7a6e66;
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
     @media (max-width: 1100px) {
       .workspace-grid {
         grid-template-columns: 1fr;
@@ -788,18 +726,16 @@
               <div class="media-frame">
                 <div class="video-card">
                   <div class="video-badge">科普讲解视频</div>
-                  <iframe
-                    class="video-frame"
-                    src="https://player.bilibili.com/player.html?isOutside=true&bvid=BV15vQwBZE7R&p=1&high_quality=1&danmaku=0&autoplay=0"
-                    title="第三届内蒙古自治区社会科学普及基地讲解员大赛视频"
-                    scrolling="no"
-                    frameborder="0"
-                    allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"
-                    allowfullscreen="true">
-                  </iframe>
+                  <div class="video-poster" id="videoPoster">
+                    <div class="poster-copy">
+                      <small>第三届内蒙古自治区</small>
+                      <strong>讲解员大赛</strong>
+                      <span>点击播放后查看赛事视频内容。</span>
+                      <button class="play-trigger" id="playTrigger" type="button">播放视频</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="video-fallback">现在已经改成站外播放器模式；如果你点播放后仍然跳出站外，那通常是 B 站播放器策略导致，我们就再换成更稳的嵌入方案。</div>
+                <div class="video-fallback">第三届内蒙古自治区社会科学普及基地讲解员大赛视频展示</div>
 
                 <div class="download-row">
                   <a class="download-btn" href="https://www.bilibili.com/video/BV15vQwBZE7R/?spm_id_from=333.337.search-card.all.click" target="_blank" rel="noreferrer">打开 B 站视频</a>
@@ -902,24 +838,6 @@
                 <strong>评审备注</strong>
                 <p>下一版最适合补的是“获奖名单表格预览”“现场照片缩略图”“第二届与第三届切换”和“报道正文滚动区”，这样会更自然地承接你截图里的内容结构。</p>
               </div>
-
-              <div class="todo-card">
-                <div class="todo-card-head">
-                  <div>
-                    <strong>今日待办与提醒</strong>
-                    <span>已为 2026-04-10 记下两条待办，并统一设为今晚 20:30 提醒。</span>
-                  </div>
-                  <div class="todo-badge" id="todoDateBadge">2026-04-10</div>
-                </div>
-
-                <div id="todoList" class="todo-list"></div>
-
-                <div class="todo-actions">
-                  <button id="enableReminder" class="todo-btn" type="button">开启浏览器提醒</button>
-                  <button id="exportTodayTodos" class="todo-btn secondary" type="button">导出今日待办</button>
-                  <span id="todoStatus" class="todo-note">页面保持打开时，20:30 会尝试发送通知；如果通知未授权，会回退到弹窗提醒。</span>
-                </div>
-              </div>
             </aside>
           </div>
         </section>
@@ -927,160 +845,25 @@
     </main>
   </div>
   <script>
-    const TODO_STORAGE_KEY = "anmeng-today-todos-v1";
-    const TODAY_KEY = "2026-04-10";
-    const REMINDER_TIME = "20:30";
+    const playTrigger = document.getElementById("playTrigger");
+    const videoPoster = document.getElementById("videoPoster");
+    const videoCard = document.querySelector(".video-card");
 
-    const todoDateBadge = document.getElementById("todoDateBadge");
-    const todoList = document.getElementById("todoList");
-    const todoStatus = document.getElementById("todoStatus");
-    const enableReminder = document.getElementById("enableReminder");
-    const exportTodayTodos = document.getElementById("exportTodayTodos");
+    if (playTrigger && videoPoster && videoCard) {
+      playTrigger.addEventListener("click", () => {
+        const frame = document.createElement("iframe");
+        frame.className = "video-frame";
+        frame.src = "https://player.bilibili.com/player.html?isOutside=true&bvid=BV15vQwBZE7R&p=1&high_quality=1&danmaku=0&autoplay=1";
+        frame.title = "第三届内蒙古自治区社会科学普及基地讲解员大赛视频";
+        frame.setAttribute("scrolling", "no");
+        frame.setAttribute("frameborder", "0");
+        frame.setAttribute("allow", "autoplay; fullscreen; picture-in-picture; encrypted-media");
+        frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-popups allow-forms allow-presentation");
+        frame.setAttribute("allowfullscreen", "true");
 
-    const defaultTodos = [
-      {
-        id: "todo-ahhl-tech-assist",
-        title: "明确安徽联的科技助残项目与负责部门",
-        detail: "梳理安徽联科技助残具体有哪些项目、对应负责部门在哪里；同时比对其他省份有没有类似项目，重点关注康复部门和计财部门。",
-        reminderAt: `${TODAY_KEY}T20:30:00+08:00`
-      },
-      {
-        id: "todo-html-video-path",
-        title: "梳理 HTML 插视频的实现路径",
-        detail: "把 HTML 里插入视频的实现路径整理清楚，明确用什么标签、资源地址、兼容方式和页面接入方案。",
-        reminderAt: `${TODAY_KEY}T20:30:00+08:00`
-      }
-    ];
-
-    initializeTodos();
-    renderTodos();
-    scheduleReminderChecks();
-
-    enableReminder.addEventListener("click", async () => {
-      if (!("Notification" in window)) {
-        todoStatus.textContent = "当前浏览器不支持通知提醒，页面到点时会尝试用弹窗提示。";
-        return;
-      }
-
-      const permission = await Notification.requestPermission();
-      if (permission === "granted") {
-        todoStatus.textContent = "浏览器通知已开启。只要页面保持打开，今晚 20:30 会提醒你。";
-      } else {
-        todoStatus.textContent = "通知权限没有开启。页面到点时仍会尝试用弹窗提醒你。";
-      }
-    });
-
-    exportTodayTodos.addEventListener("click", () => {
-      const state = loadTodoState();
-      const payload = {
-        date: TODAY_KEY,
-        exportedAt: new Date().toISOString(),
-        todos: state.days[TODAY_KEY] || []
-      };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `today-todos-${TODAY_KEY}.json`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-      todoStatus.textContent = `已导出今日待办：today-todos-${TODAY_KEY}.json`;
-    });
-
-    function initializeTodos() {
-      const state = loadTodoState();
-      if (!state.days[TODAY_KEY] || !state.days[TODAY_KEY].length) {
-        state.days[TODAY_KEY] = defaultTodos.map((item) => ({ ...item }));
-        persistTodoState(state);
-      }
-    }
-
-    function loadTodoState() {
-      try {
-        const raw = localStorage.getItem(TODO_STORAGE_KEY);
-        if (!raw) {
-          return { days: {}, reminded: {} };
-        }
-        const parsed = JSON.parse(raw);
-        return {
-          days: parsed.days && typeof parsed.days === "object" ? parsed.days : {},
-          reminded: parsed.reminded && typeof parsed.reminded === "object" ? parsed.reminded : {}
-        };
-      } catch (error) {
-        return { days: {}, reminded: {} };
-      }
-    }
-
-    function persistTodoState(state) {
-      localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function renderTodos() {
-      const state = loadTodoState();
-      const todos = state.days[TODAY_KEY] || [];
-      todoDateBadge.textContent = TODAY_KEY;
-
-      todoList.innerHTML = todos.map((todo) => `
-        <article class="todo-item">
-          <strong>${escapeHtml(todo.title)}</strong>
-          <p>${escapeHtml(todo.detail)}</p>
-          <div class="todo-meta">
-            <span class="todo-chip">今日事项</span>
-            <span class="todo-chip">提醒 ${formatReminder(todo.reminderAt)}</span>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function scheduleReminderChecks() {
-      checkReminders();
-      window.setInterval(checkReminders, 30000);
-    }
-
-    function checkReminders() {
-      const state = loadTodoState();
-      const todos = state.days[TODAY_KEY] || [];
-      const now = new Date();
-
-      todos.forEach((todo) => {
-        const reminderKey = `${TODAY_KEY}:${todo.id}`;
-        const target = new Date(todo.reminderAt);
-        if (state.reminded[reminderKey] || now < target) {
-          return;
-        }
-
-        const message = `今晚待办提醒：${todo.title}`;
-        if ("Notification" in window && Notification.permission === "granted") {
-          new Notification("今晚 20:30 提醒", { body: message });
-        } else {
-          window.alert(message);
-        }
-
-        state.reminded[reminderKey] = new Date().toISOString();
-        persistTodoState(state);
-        todoStatus.textContent = "20:30 提醒已触发。";
-      });
-    }
-
-    function formatReminder(value) {
-      const date = new Date(value);
-      return new Intl.DateTimeFormat("zh-CN", {
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      }).format(date);
-    }
-
-    function escapeHtml(text) {
-      return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+        videoCard.appendChild(frame);
+        videoPoster.classList.add("hidden");
+      }, { once: true });
     }
   </script>
 </body>
